@@ -52,7 +52,7 @@ public class DatabaseLoader implements ApplicationRunner {
                     String buzzword = buzzwords[i % buzzwords.length];
                     String title = String.format(template, buzzword);
                     Course c = new Course(title, "http://www" + title + ".com");
-                    Review review = new Review(i % 5, String.format("I loved ", buzzword));
+                    Review review = new Review(i % 5, String.format("I loved %s", buzzword));
                     c.addReview(review);
                     coursesList.add(c);
                     reviewList.add(review);
