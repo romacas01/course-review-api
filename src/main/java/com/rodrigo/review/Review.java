@@ -2,6 +2,7 @@ package com.rodrigo.review;
 
 import com.rodrigo.core.BaseEntity;
 import com.rodrigo.course.Course;
+import com.rodrigo.user.User;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -16,6 +17,9 @@ public class Review extends BaseEntity {
     @ManyToOne
     private Course course;
 
+    @ManyToOne
+    private User user;
+
     protected Review(){
         super();
     }
@@ -26,6 +30,13 @@ public class Review extends BaseEntity {
         this.description = description;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Course getCourse() {
         return course;

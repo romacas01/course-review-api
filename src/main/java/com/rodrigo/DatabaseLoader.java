@@ -4,12 +4,15 @@ import com.rodrigo.course.Course;
 import com.rodrigo.course.CourseRepository;
 import com.rodrigo.review.Review;
 import com.rodrigo.review.ReviewRepository;
+import com.rodrigo.user.User;
+import com.rodrigo.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -17,12 +20,16 @@ import java.util.stream.IntStream;
 public class DatabaseLoader implements ApplicationRunner {
     private final CourseRepository courseRepository;
     private final ReviewRepository reviewRepository;
+    //private final UserRepository userRepository;
 
     @Autowired
     public DatabaseLoader(CourseRepository courseRepository,
-                          ReviewRepository reviewRepository) {
+                          ReviewRepository reviewRepository
+                          //UserRepository userRepository
+                          ) {
         this.courseRepository = courseRepository;
         this.reviewRepository = reviewRepository;
+       // this.userRepository = userRepository;
     }
 
     @Override
@@ -44,6 +51,27 @@ public class DatabaseLoader implements ApplicationRunner {
                 "Spring HATEOAS"
         };
 
+        List<User> students = Arrays.asList(
+                new User("jacobproffer", "Jacob",  "Proffer", "password", Arrays.asList("ROLE_USER")),
+                new User("mlnorman", "Mike",  "Norman", "password", Arrays.asList("ROLE_USER")),
+                new User("k_freemansmith", "Karen",  "Freeman-Smith", "password", Arrays.asList("ROLE_USER")),
+                new User("seth_lk", "Seth",  "Kroger", "password", Arrays.asList("ROLE_USER")),
+                new User("mrstreetgrid", "Java",  "Vince", "password", Arrays.asList("ROLE_USER")),
+                new User("anthonymikhail", "Tony",  "Mikhail", "password", Arrays.asList("ROLE_USER")),
+                new User("boog690", "AJ",  "Teacher", "password", Arrays.asList("ROLE_USER")),
+                new User("faelor", "Erik",  "Faelor Shafer", "password", Arrays.asList("ROLE_USER")),
+                new User("christophernowack", "Christopher",  "Nowack", "password", Arrays.asList("ROLE_USER")),
+                new User("calebkleveter", "Caleb",  "Kleveter", "password", Arrays.asList("ROLE_USER")),
+                new User("richdonellan", "Rich",  "Donnellan", "password", Arrays.asList("ROLE_USER")),
+                new User("albertqerimi", "Albert",  "Qerimi", "password", Arrays.asList("ROLE_USER"))
+        );
+
+        //userRepository.save(students);
+
+        User admin = new User("Rodrigo", "Castro",  "romacas", "password", Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
+
+        //userRepository.save(admin);
+
         List<Course> coursesList = new ArrayList<>();
         List<Review> reviewList = new ArrayList<>();
         IntStream.range(0, 100)
@@ -52,7 +80,8 @@ public class DatabaseLoader implements ApplicationRunner {
                     String buzzword = buzzwords[i % buzzwords.length];
                     String title = String.format(template, buzzword);
                     Course c = new Course(title, "http://www" + title + ".com");
-                    Review review = new Review(i % 5, String.format("I loved %s", buzzword));
+                    Review review = new Review((i % 5) + 1, String.format("I loved %s", buzzword));
+                    review.setUser(students.get(i % students.size()));
                     c.addReview(review);
                     coursesList.add(c);
                     reviewList.add(review);
