@@ -21,13 +21,13 @@ public class User extends BaseEntity{
     @JsonIgnore
     private String password;
     @JsonIgnore
-    private List<String> roles;
+    private String[] roles;
 
     protected User() {
         super();
     }
 
-    public User(String firstName, String lastName, String username, String password, List<String> roles) {
+    public User(  String password, String username, String firstName, String lastName, String[] roles) {
         this();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,10 +52,6 @@ public class User extends BaseEntity{
         this.password = PASSWORD_ENCODER.encode(password);
     }
 
-    protected void addRole(String role) {
-        roles.add(role);
-    }
-
     public static PasswordEncoder getPasswordEncoder() {
         return PASSWORD_ENCODER;
     }
@@ -64,7 +60,7 @@ public class User extends BaseEntity{
         return password;
     }
 
-    public List<String> getRoles() {
+    public String[] getRoles() {
         return roles;
     }
 }

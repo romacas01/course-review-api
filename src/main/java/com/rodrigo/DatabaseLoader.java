@@ -5,6 +5,7 @@ import com.rodrigo.course.CourseRepository;
 import com.rodrigo.review.Review;
 import com.rodrigo.review.ReviewRepository;
 import com.rodrigo.user.User;
+//import com.rodrigo.user.UserRepository;
 import com.rodrigo.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -20,16 +21,16 @@ import java.util.stream.IntStream;
 public class DatabaseLoader implements ApplicationRunner {
     private final CourseRepository courseRepository;
     private final ReviewRepository reviewRepository;
-    //private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public DatabaseLoader(CourseRepository courseRepository,
-                          ReviewRepository reviewRepository
-                          //UserRepository userRepository
+                          ReviewRepository reviewRepository,
+                          UserRepository userRepository
                           ) {
         this.courseRepository = courseRepository;
         this.reviewRepository = reviewRepository;
-       // this.userRepository = userRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -52,25 +53,25 @@ public class DatabaseLoader implements ApplicationRunner {
         };
 
         List<User> students = Arrays.asList(
-                new User("jacobproffer", "Jacob",  "Proffer", "password", Arrays.asList("ROLE_USER")),
-                new User("mlnorman", "Mike",  "Norman", "password", Arrays.asList("ROLE_USER")),
-                new User("k_freemansmith", "Karen",  "Freeman-Smith", "password", Arrays.asList("ROLE_USER")),
-                new User("seth_lk", "Seth",  "Kroger", "password", Arrays.asList("ROLE_USER")),
-                new User("mrstreetgrid", "Java",  "Vince", "password", Arrays.asList("ROLE_USER")),
-                new User("anthonymikhail", "Tony",  "Mikhail", "password", Arrays.asList("ROLE_USER")),
-                new User("boog690", "AJ",  "Teacher", "password", Arrays.asList("ROLE_USER")),
-                new User("faelor", "Erik",  "Faelor Shafer", "password", Arrays.asList("ROLE_USER")),
-                new User("christophernowack", "Christopher",  "Nowack", "password", Arrays.asList("ROLE_USER")),
-                new User("calebkleveter", "Caleb",  "Kleveter", "password", Arrays.asList("ROLE_USER")),
-                new User("richdonellan", "Rich",  "Donnellan", "password", Arrays.asList("ROLE_USER")),
-                new User("albertqerimi", "Albert",  "Qerimi", "password", Arrays.asList("ROLE_USER"))
+                new User("jacobproffer", "Jacob",  "Proffer", "password", new String[] {"ROLE_USER"}),
+                new User("mlnorman", "Mike",  "Norman", "password", new String[] {"ROLE_USER"}),
+                new User("k_freemansmith", "Karen",  "Freeman-Smith", "password", new String[] {"ROLE_USER"}),
+                new User("seth_lk", "Seth",  "Kroger", "password", new String[] {"ROLE_USER"}),
+                new User("mrstreetgrid", "Java",  "Vince", "password", new String[] {"ROLE_USER"}),
+                new User("anthonymikhail", "Tony",  "Mikhail", "password", new String[] {"ROLE_USER"}),
+                new User("boog690", "AJ",  "Teacher", "password", new String[] {"ROLE_USER"}),
+                new User("faelor", "Erik",  "Faelor Shafer", "password", new String[] {"ROLE_USER"}),
+                new User("christophernowack", "Christopher",  "Nowack", "password", new String[] {"ROLE_USER"}),
+                new User("calebkleveter", "Caleb",  "Kleveter", "password", new String[] {"ROLE_USER"}),
+                new User("richdonellan", "Rich",  "Donnellan", "password", new String[] {"ROLE_USER"}),
+                new User("albertqerimi", "Albert",  "Qerimi", "password", new String[] {"ROLE_USER"})
         );
 
-        //userRepository.save(students);
+        userRepository.save(students);
 
-        User admin = new User("Rodrigo", "Castro",  "romacas", "password", Arrays.asList("ROLE_USER", "ROLE_ADMIN"));
+        User admin = new User("password", "romacas",  "Rodrigo", "Castro", new String[] {"ROLE_USER", "ROLE_ADMIN"});
 
-        //userRepository.save(admin);
+        userRepository.save(admin);
 
         List<Course> coursesList = new ArrayList<>();
         List<Review> reviewList = new ArrayList<>();
